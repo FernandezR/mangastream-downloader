@@ -14,17 +14,17 @@
     <message>
         <location filename="../qml/WaybackSelect.qml" line="20"/>
         <source>Select previous version</source>
-        <translation type="unfinished"></translation>
+        <translation>Načíst předchozí verzi</translation>
     </message>
     <message>
         <location filename="../qml/WaybackSelect.qml" line="28"/>
         <source>Choose date to set:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zvolte datum:</translation>
     </message>
     <message>
         <location filename="../qml/WaybackSelect.qml" line="49"/>
         <source>Confirm</source>
-        <translation type="unfinished"></translation>
+        <translation>Potvrdit</translation>
     </message>
 </context>
 <context>
@@ -72,25 +72,25 @@
     <message>
         <location filename="../qml/main.qml" line="67"/>
         <source>&amp;Select previous version</source>
-        <translation type="unfinished"></translation>
+        <translation>Načíst předchozí verzi</translation>
     </message>
     <message>
-        <location filename="../qml/main.qml" line="108"/>
+        <location filename="../qml/main.qml" line="109"/>
         <source>Choose manga directory</source>
         <translation>Zvolte složku pro ukládání</translation>
     </message>
     <message>
-        <location filename="../qml/main.qml" line="192"/>
+        <location filename="../qml/main.qml" line="193"/>
         <source>MangaStream downloader</source>
         <translation>MangaStream downloader</translation>
     </message>
     <message>
-        <location filename="../qml/main.qml" line="195"/>
+        <location filename="../qml/main.qml" line="196"/>
         <source>Choose manga to download:</source>
         <translation>Zvolte mangu ke stažení:</translation>
     </message>
     <message>
-        <location filename="../qml/main.qml" line="208"/>
+        <location filename="../qml/main.qml" line="209"/>
         <source>Loading...</source>
         <translation>Načítání...</translation>
     </message>
@@ -115,12 +115,12 @@
         <translation>Info o stažení</translation>
     </message>
     <message>
-        <location filename="../qml/main.qml" line="323"/>
+        <location filename="../qml/main.qml" line="327"/>
         <source>Download</source>
         <translation>Stáhnout</translation>
     </message>
     <message>
-        <location filename="../qml/main.qml" line="345"/>
+        <location filename="../qml/main.qml" line="349"/>
         <source>Download all chapters</source>
         <translation>Stáhnout všechny kapitoly</translation>
     </message>

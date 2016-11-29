@@ -75,22 +75,22 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../qml/main.qml" line="108"/>
+        <location filename="../qml/main.qml" line="109"/>
         <source>Choose manga directory</source>
         <translation>Vyberte priečinok na uloženie</translation>
     </message>
     <message>
-        <location filename="../qml/main.qml" line="192"/>
+        <location filename="../qml/main.qml" line="193"/>
         <source>MangaStream downloader</source>
         <translation>MangaStream downloader</translation>
     </message>
     <message>
-        <location filename="../qml/main.qml" line="195"/>
+        <location filename="../qml/main.qml" line="196"/>
         <source>Choose manga to download:</source>
         <translation>Zvoľte mangu na stiahnutie</translation>
     </message>
     <message>
-        <location filename="../qml/main.qml" line="208"/>
+        <location filename="../qml/main.qml" line="209"/>
         <source>Loading...</source>
         <translation>Načítanie...</translation>
     </message>
@@ -115,12 +115,12 @@
         <translation>Info o stiahnutí</translation>
     </message>
     <message>
-        <location filename="../qml/main.qml" line="323"/>
+        <location filename="../qml/main.qml" line="327"/>
         <source>Download</source>
         <translation>Stiahnuť</translation>
     </message>
     <message>
-        <location filename="../qml/main.qml" line="345"/>
+        <location filename="../qml/main.qml" line="349"/>
         <source>Download all chapters</source>
         <translation>Stiahnuť všetky kapitoly</translation>
     </message>
