@@ -3,6 +3,7 @@
 QString MangaStream::getContentOfUrl(QString url) {
     QUrl dUrl(url);
     QNetworkRequest request(dUrl);
+    request.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
     QNetworkAccessManager mgr;
     QNetworkReply * reply = mgr.get(request);
 
@@ -10,7 +11,7 @@ QString MangaStream::getContentOfUrl(QString url) {
     QObject::connect(&mgr,SIGNAL(finished(QNetworkReply*)), &evtLoop, SLOT(quit()));
     evtLoop.exec();
 
-    QString answer = reply->readAll();
+    QString answer(reply->readAll());
     return answer;
 }
 
@@ -85,7 +86,11 @@ QStringList MangaStream::getListOfChapters(QString url) {
 
 QStringList MangaStream::getImages(QString url) {
     QStringList ret;
-    QString chapter = url.split("/").at(5);
+    int index = 5;
+    if(url.indexOf("web.archive.org") > -1) {
+        index = 10;
+    }
+    QString chapter = url.split("/").at(index);
 
     QString currentChapter = chapter;
     QString currentUrl = url;
@@ -99,15 +104,23 @@ QStringList MangaStream::getImages(QString url) {
 
         QString line = answer.mid(startPos, length);
 
-        QRegularExpression regexp("<a href=\"(.+)\"><img id=\"manga-page\" src=\"(.+)\"/></a>");
+        QRegularExpression regexp("<a href=\"(.+)\"><img id=\"manga-page\" +src=\"(.+)\" */></a>");
 
         QRegularExpressionMatch matches = regexp.match(line);
 
-        ret << matches.captured(2);
+        QString imgUrl(matches.captured(2));
+        if(imgUrl.indexOf("/web/") == 0) {
+            imgUrl = "http://web.archive.org"+imgUrl;
+        }
+
+        ret << imgUrl;
 
         currentUrl = matches.captured(1);
-        if(currentUrl.split("/").length() > 5) {
-            currentChapter = currentUrl.split("/").at(5);
+        if(currentUrl.indexOf("/web/") == 0) {
+            currentUrl = "http://web.archive.org"+currentUrl;
+        }
+        if(currentUrl.split("/").length() > index) {
+            currentChapter = currentUrl.split("/").at(index);
         } else {
             currentChapter = "";
         }

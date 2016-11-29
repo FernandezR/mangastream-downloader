@@ -28,6 +28,7 @@ bool DownloadImage::download(const QString url, QString manga, const QString cha
 
     QUrl dUrl(url);
     QNetworkRequest request(dUrl);
+    request.setAttribute(QNetworkRequest::FollowRedirectsAttribute, true);
     QNetworkAccessManager mgr;
 
     QNetworkReply *reply = mgr.get(request);

@@ -73,12 +73,13 @@ ApplicationWindow {
                     window.show();
                     window.closing.connect(function() {
                         var url = wayback.selectedUrl;
-                        if(url) {
-                            var index = combobox_mangalist.currentIndex;
-                            var obj = lmodel.get(index);
-                            lmodel.set(index, {value: url});
-                            combobox_mangalist.currentIndexChanged();
+                        var index = combobox_mangalist.currentIndex;
+                        var obj = lmodel.get(index);
+                        if(!url) {
+                            url = obj.orig_url;
                         }
+                        lmodel.set(index, {value: url});
+                        combobox_mangalist.currentIndexChanged();
                     });
                 }
             }
@@ -233,7 +234,6 @@ ApplicationWindow {
                 startLoading();
                 lmodelChapters.clear();
                 mangaTitle = lmodel.get(currentIndex).text;
-                debug(lmodel.get(currentIndex).value);
                 var chapters = mangastream.getListOfChapters(lmodel.get(currentIndex).value);
                 var url;
                 var name;
@@ -306,6 +306,10 @@ ApplicationWindow {
         visible: false
         onCurrentIndexChanged: {
             if(typeof lmodelChapters.get(currentIndex).link != "undefined" && lmodelChapters.get(currentIndex).text != "undefined") {
+                if(lmodelChapters.get(currentIndex).link.indexOf("/web/") === 0) {
+                    var l = lmodelChapters.get(currentIndex).link;
+                    lmodelChapters.set(currentIndex, {link: "http://web.archive.org"+l});
+                }
                 startLoading();
                 chapter = lmodelChapters.get(currentIndex).text;
                 downloadButton.visible = false;

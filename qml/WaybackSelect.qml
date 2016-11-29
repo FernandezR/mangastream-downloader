@@ -49,6 +49,7 @@ ApplicationWindow {
         text: qsTr("Confirm")
         anchors.centerIn: parent
         onClicked: {
+            root.visible = false;
             wayback.selectedUrl = url;
             root.close();
         }
