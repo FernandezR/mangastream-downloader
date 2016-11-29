@@ -7,6 +7,7 @@ import QtQuick.LocalStorage 2.0
 import cz.chrastecky.img 1.0
 import cz.chrastecky.mangastream 1.0
 import cz.chrastecky.misc 1.0
+import cz.chrastecky.wayback 1.0
 
 import "qrc:/qml/components"
 
@@ -23,6 +24,8 @@ ApplicationWindow {
     property string mangaTitle
     property string chapter
     property string appPath: misctools.appPath+"/manga"
+
+    id: root
 
     visible: true
     width: 640
@@ -57,6 +60,31 @@ ApplicationWindow {
         }
 
         Menu {
+            id: waybackmenu
+            title: qsTr("&Wayback Machine")
+            visible: misctools.isDebug() && downloadButton.visible
+            MenuItem {
+                text: qsTr("&Select previous version")
+                onTriggered: {
+                    var origUrl = lmodel.get(combobox_mangalist.currentIndex).orig_url;
+                    wayback.getPreviousVersions(origUrl);
+                    var component = Qt.createComponent("qrc:/qml/WaybackSelect.qml");
+                    var window = component.createObject(root, {"wayback": wayback, "marginSize": marginSize});
+                    window.show();
+                    window.closing.connect(function() {
+                        var url = wayback.selectedUrl;
+                        if(url) {
+                            var index = combobox_mangalist.currentIndex;
+                            var obj = lmodel.get(index);
+                            lmodel.set(index, {value: url});
+                            combobox_mangalist.currentIndexChanged();
+                        }
+                    });
+                }
+            }
+        }
+
+        Menu {
             title: "Debug"
             visible: misctools.isDebug()
             MenuItem {
@@ -69,6 +97,10 @@ ApplicationWindow {
                 }
             }
         }
+    }
+
+    WaybackMachine {
+        id: wayback
     }
 
     FileDialog {
@@ -143,14 +175,14 @@ ApplicationWindow {
                         url = mangaList[i];
                     } else {
                         name = mangaList[i];
-                        lmodel.append({text: name, value: url});
+                        lmodel.append({text: name, value: url, orig_url: url});
                         tx.executeSql("INSERT INTO mangalist (url, manga) VALUES (?,?)", [url, name]);
                     }
                 }
                 stopLoading();
             } else {
                 for(var i = 0; i < res.rows.length; i++) {
-                    lmodel.append({text: res.rows.item(i).manga, value: res.rows.item(i).url});
+                    lmodel.append({text: res.rows.item(i).manga, value: res.rows.item(i).url, orig_url: res.rows.item(i).url});
                 }
                 stopLoading();
             }
@@ -191,6 +223,7 @@ ApplicationWindow {
     }
 
     ComboBox {
+        id: combobox_mangalist
         model: lmodel
         textRole: "text"
         x: chooselabel.x + chooselabel.width + marginSize
@@ -200,6 +233,7 @@ ApplicationWindow {
                 startLoading();
                 lmodelChapters.clear();
                 mangaTitle = lmodel.get(currentIndex).text;
+                debug(lmodel.get(currentIndex).value);
                 var chapters = mangastream.getListOfChapters(lmodel.get(currentIndex).value);
                 var url;
                 var name;
@@ -271,7 +305,6 @@ ApplicationWindow {
         y: chapterlabel.y + 5
         visible: false
         onCurrentIndexChanged: {
-            debug(currentIndex);
             if(typeof lmodelChapters.get(currentIndex).link != "undefined" && lmodelChapters.get(currentIndex).text != "undefined") {
                 startLoading();
                 chapter = lmodelChapters.get(currentIndex).text;

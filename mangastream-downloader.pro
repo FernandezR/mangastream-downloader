@@ -13,7 +13,8 @@ CONFIG += release
 SOURCES += sources/main.cpp \
     sources/qdownloader.cpp \
     sources/mangastream.cpp \
-    sources/misctools.cpp
+    sources/misctools.cpp \
+    sources/wayback.cpp
 
 RESOURCES += qml.qrc \
     translations.qrc
@@ -31,7 +32,8 @@ HEADERS += \
     headers/qdownloader.h \
     headers/mangastream.h \
     headers/misctools.h \
-    headers/isdebug.h
+    headers/isdebug.h \
+    headers/wayback.h
 
 lupdate_only {
     SOURCES += qml/*.qml
